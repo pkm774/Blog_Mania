@@ -13,8 +13,8 @@
 
 #navbarName {
   font-family: "Times New Roman", Times, serif;
-  font-size: 2.5rem;
-  color: #A02334;
+  font-size: 3rem;
+  color: #3795BD;
 }
 
 #navItems {
@@ -26,7 +26,7 @@
 .navItem {
   margin-left: 20px;
   margin-right: 20px;
-  color: #3795BD;
+  color: #982B1C;
   font-size: 20px;
   font-family: "Manrope", sans-serif;
   font-optical-sizing: auto;
@@ -77,13 +77,52 @@
 
 #infoText {
   position: relative;
-  font-family: "Noto Sans", sans-serif;
+  font-family: "Source Serif 4", serif;
+  font-style: normal;
+  font-size: 25px;
+  margin-top: 20px;
+  color: #134B70;
+}
+
+.buttonClass {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+#blogButtonText {
+  position: relative;
+  position: relative;
+  font-family: "Helvetica", "Arial", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   font-variation-settings: "wdth" 100;
-  font-size: 15px;
-  margin-top: 20px;
-  color: #508C9B;
+  font-size: 25px;
+  color: #5B99C2;
+}
+
+#blogButton {
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+
+/* Create Page */
+.createPage {
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+#createDiv {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+#inputBox {
+  width: 100%;
+  height: 500px;
 }
 
 /* Blog Page */
@@ -310,7 +349,7 @@
   }
 
   #navbarName{
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .homePage {
@@ -333,6 +372,10 @@
     height: auto;
     width: auto;
     margin: auto;
+  }
+
+  #blogButtonText {
+    font-size: 20px;
   }
 
   #welcomeText {
