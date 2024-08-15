@@ -1,24 +1,33 @@
 <%- include('partials/header.ejs') %>
 <blog>
-  <div class="blogPage">
-    <% if (allBlogs.length > 0) { %>
+  <% if (allBlogs.size > 0) { %>
+  <div class="blogPage1">
     <ul class="list-unstyled">
-      <% for (var i = 0; i < allBlogs.length ; i++) { %> 
+      <% for (var i = 0; i < allBlogs.size ; i++) { %>
       <li>
-        <a class="d-flex flex-column flex-lg-row gap-5 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"  href="/view?postId=<%= i %>">
-          <div class="col-lg-8">
-            <h6 class="mb-0" id="blogBodyTittle"> <%= allBlogs[i].tittle %></h6>
-            <small class="text-body-secondary" id="blogBodyDate"><%= allBlogs[i].date %></small>
+        <div class="border-top border-bottom">
+          <div class="d-flex flex-column flex-lg-row gap-5 align-items-start align-items-lg-center link-body-emphasis text-decoration-none">
+            <div class="col-lg-8">
+              <h6 class="mb-0" id="blogBodyTittle"> <%= allBlogs.get(i).tittle %></h6>
+              <h1 class="text-body-secondary" id="blogBodyDate"><%= allBlogs.get(i).date %></h1>
+            </div>
           </div>
-        </a>
+          <div class="d-flex flex-row justify-between gap-3 buttonsMargin">
+            <button class="btn btn-outline-info <%# rounded-pill %> blogButtons blogViewButton" type="button" id="<%= i %>">View</button>
+            <button class="btn btn-outline-warning <%# rounded-pill %> blogButtons blogEditButton" type="button" id="<%= i %>">Edit</button>
+            <button class="btn btn-outline-danger <%# rounded-pill %> blogButtons blogDeleteButton" type="button" id="<%= i %>">Delete</button>
+          </div>
+        </div>
       </li>
       <% } %>
     </ul>
-    <% } else { %>
-      <div class="">
-        <h3 id="noBlogs">Sorry, No Blogs To show !</h3>
-      </div>
-    <% } %>
   </div>
+  <% } else { %>
+  <div class="blogPage2">
+    <div class="">
+      <h3 id="noBlogs">Sorry, No Blogs To show !</h3>
+    </div>
+  </div>
+  <% } %>
 </blog>
-<%- include('partials/footer.ejs') %>
+<%- include('partials/nologofooter.ejs') %>

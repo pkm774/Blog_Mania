@@ -4,39 +4,108 @@
   padding-right: 30px;
 }
 
+div {
+  display: block;
+  unicode-bidi: isolate;
+}
+
+.bd-edit {
+  --bd-padding: 2rem;
+  --bs-border-color: black;
+  position: relative;
+  padding: var(--bd-padding);
+  border: solid var(--bs-border-color);
+  border-width: 1px 0;
+}
+
 /* Header */
 .headerItems {
   display: flex;
-  flex-direction: rows;
   justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+.navbar-collapse.collapse {
+  width: 100%;
+  flex-grow: 1;
+  justify-content: flex-end;
+  transition: none;
+}
+
+/* Center the collapse button within its container */
+.navbar-toggler-mod {
+  margin-top: 15px;
 }
 
 #navbarName {
   font-family: "Times New Roman", Times, serif;
   font-size: 3rem;
   color: #3795BD;
+  white-space: nowrap;
 }
 
 #navItems {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+  width: 67px;
 }
 
-.navItem {
-  margin-left: 20px;
-  margin-right: 20px;
+.navbarScrollButton {
+  position: relative;
+}
+
+.navbar-nav-scroll-mod {
+  position: relative;
+  width: 25px;
+  max-width: max-content;
+  margin-bottom: 10px;
+}
+
+.navButtons {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.nav-link-mod {
+  display: block;
+  padding: 0.5rem;
+  text-decoration: none;
+  border-radius: 0.375rem;
+  background: 0 0;
+  border: 0.5px solid #982B1C;
+}
+
+.navButton {
   color: #982B1C;
-  font-size: 20px;
+  font-size: 16px;
   font-family: "Manrope", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+  padding: 7.5px 15px;
 }
 
-.nav-button {
+.nav-link-mod:hover {
+  background-color: #982B1C;
+  color: white;
+}
+
+.container-fluid-mod {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.nav-pills-mod {
   display: flex;
   align-items: center;
-  position: relative;
 }
 
 /* Home Page */
@@ -109,7 +178,7 @@
 }
 
 /* Create Page */
-#createButton {
+#saveButton {
   font-family: "Helvetica", "Arial", sans-serif;
 }
 
@@ -144,7 +213,14 @@
   margin-top: 10px;
 }
 
-.blogPage {
+.blogPage1 {
+  margin-left: 30px;
+  margin-right: 30px;
+  position: relative;
+  height: 100%;
+}
+
+.blogPage2 {
   margin-left: 30px;
   margin-right: 30px;
   position: relative;
@@ -155,13 +231,25 @@
   font-family: "Playfair Display", serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 #blogBodyDate {
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
   font-style: normal;
+  font-size: 15px;
+  margin: 8px 0;
+}
+
+.blogButtons {
+  --bs-btn-color: #000;
+  /*--bs-btn-border-color: #000;*/
+  --bs-btn-hover-color: white;
+}
+
+.buttonsMargin {
+  margin-bottom: 10px;
 }
 
 /* View Page */
@@ -179,6 +267,11 @@
   font-family: "Playfair Display", serif;
   font-style: normal;
   font-weight: 600;
+}
+
+#viewBlogDateName {
+  margin-top: 10px;
+  font-size: 15px;
 }
 
 /* About Page */
@@ -285,21 +378,58 @@
 }
 
 /* Media Query Breakpoint */
-@media (min-width: 701px) and (max-width: 890px) {
+@media (max-width: 992px) {
   .headerItems {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: row;
+      gap: 10px;
+      width: 100%;
   }
+
+  .headerItem {
+      width: 100%;
+  }
+
+  .navbar-toggler-mod {
+      align-self: flex-start;
+      margin-left: 0;
+  }
+
+  .navbar-collapse.collapse {
+      width: 100%;
+      flex-grow: 1;
+      justify-content: flex-start;
+      transition: none;
+  }
+
+  .navButtons {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 100%;
+  }
+
+  .navButton {
+      padding: 7.5px 0;
+  }
+
+  #navbarName {
+      font-size: 3rem;
+      text-align: left;
+      width: 100%;
+  }
+}
+
+/* Media Query Breakpoint */
+@media (min-width: 701px) and (max-width: 890px) {
 
   .headerItem {
     display: flex;
     justify-content: center;
-  }
-
-  #navbarName {
-    font-size: 3rem;
   }
 
   .homePage {
@@ -333,20 +463,10 @@
 }
 
 /* Media Query Breakpoint */
-@media (min-width: 441px) and (max-width: 700px) {
-  .headerItems {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
+@media (min-width: 465px) and (max-width: 700px) {
   .headerItem {
     display: flex;
     justify-content: center;
-  }
-
-  #navbarName {
-    font-size: 3rem;
   }
 
   .homePage {
@@ -374,30 +494,15 @@
 }
 
 /* Media Query Breakpoint */
-@media (max-width: 440px) {
-  .headerItems {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  #navItems {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .navItem {
-    margin-left: 0px;
-    margin-right: 0px;
-  }
-
+@media (max-width: 464px) {
   .headerItem {
     display: flex;
     justify-content: center;
   }
 
-  #navbarName {
-    font-size: 2.5rem;
+  .navbar-toggler-mod {
+    margin-left: 3px;
+    margin-top: 5px;
   }
 
   .homePage {

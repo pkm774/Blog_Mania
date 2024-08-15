@@ -4,11 +4,11 @@
     <article id="viewArticle">
       <div class="blog-post">
         <h2 class="display-5 link-body-emphasis mb-1" id="vieBlogTittle"><%= blog.tittle %></h2>
-        <p class="blog-post-meta"><%= blog.date %> by <%= blog.name %></p>
+        <p class="blog-post-meta" id="viewBlogDateName"><u><b>Date</b>:</u> <%= blog.date %> <u><b>By</b>:</u> <%= blog.name %></p>
         <%# replace \n with br {between} //g %>
         <p style="text-align: justify;"><%- blog.body.replace(/\n/g, '<br>') %></p>
       </div>
     </article>
   </div>
 </view>
-<%- include('partials/footer.ejs') %>
+<%- include('partials/nologofooter.ejs') %>
