@@ -2,12 +2,17 @@ import express from 'express';
 import bodyParser from "body-parser";
 import fs from 'fs';
 //import { v4 as uuidv4 } from 'uuid';
+import path from 'path';
 
 const hostname = '192.168.0.107';
 const port = 8080;
 
 const app = express();
 app.use(express.static("public"));
+// For data passes by client as json
+app.use(express.json());
+// For data passes by client as encoded url
+app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const d = new Date();
@@ -41,6 +46,15 @@ if (!fs.existsSync(`public/data/blogs`)) {
     console.log('Created public/data/blogs folder');
 }
 
+// remove '..' directory traversal characters
+function sanitizeFilename(filename) {
+    return filename
+    // remove '..' directory traversal characters
+        .replace(/(\.\.)+/g, '')
+    // remove '/' and '\' characters
+        .replace(/[\/\\]/g, '');
+}
+
 app.get('/', (req, res) => {
     res.render('index.ejs');
 });
@@ -51,7 +65,8 @@ app.get('/create', (req, res) => {
 
 app.post('/save', (req, res) => {
     // Create blog file
-    const fileName = req.body.name;
+    var fileName = req.body.name;
+    fileName = sanitizeFilename(fileName);
 
     // Check if the file already exists
     let newFileName = fileName;
@@ -144,7 +159,7 @@ app.get('/edit', (req, res) => {
     res.render('edit.ejs', { passedData: blogsContainer.get(Number(postId)) });
 });
 
-app.post('/append', async (req, res) => {
+/*app.post('/append', async (req, res) => {
     try {
         // Get filename from the body
         const fileName = req.query.fileName;
@@ -173,9 +188,59 @@ app.post('/append', async (req, res) => {
         console.error(error);
         res.status(500).send('Server: Internal server error');
     }
+});*/
+
+// using PATCH endpoint to update blog
+app.patch('/append', async (req, res) => {
+    try {
+        // Get filename from the query
+        var fileName = req.query.fileName;
+        if (!fileName || typeof fileName !== 'string') {
+            return res.status(400).send('Invalid file name');
+        }
+        fileName = sanitizeFilename(fileName);
+
+        // filename already has its extension
+        const modifyFile = `public/data/blogs/${fileName}`;
+        if (!fs.existsSync(modifyFile)) {
+            return res.status(404).send('File not found');
+        }
+
+        // Read the existing file content
+        const fileContent = await fs.promises.readFile(modifyFile, 'utf8');
+
+        // Split the content into lines
+        const lines = fileContent.split(/\r\n|\n/);
+
+        // Update the title line
+        if (lines.length >= 2) {
+            lines[1] = `Tittle: ${req.body.tittle}`;
+        } else {
+            lines.push(`Tittle: ${req.body.tittle}`);
+        }
+
+        // Replace content from the 6th line onward with req.body.content
+        if (lines.length >= 6) {
+            lines.splice(5, lines.length - 5, req.body.blog);
+        } else {
+            lines.push(req.body.blog);
+        }
+
+        // Join the lines back together
+        const updatedContent = lines.join('\n');
+
+        // Write the updated content to the file
+        await fs.promises.writeFile(modifyFile, updatedContent, 'utf8');
+
+        // Send a 200 status code indicating success
+        res.sendStatus(200);
+    } catch (error) {
+        console.error('Server: Error updating file:', error);
+        res.status(500).send('Server: Internal server error');
+    }
 });
 
-app.post('/delete', (req, res) => {
+/*app.post('/delete', (req, res) => {
     const postId = Number(req.body.id);
 
     if (blogsContainer.get(postId)) {
@@ -195,6 +260,30 @@ app.post('/delete', (req, res) => {
         res.sendStatus(201);
     } else {
         console.log('Server: No Such file !');
+    }
+});*/
+
+app.delete('/delete', (req, res) => {
+    const postId = Number(req.body.id);
+
+    if (blogsContainer.get(postId)) {
+        const deleteFileName = blogsContainer.get(postId).filename;
+        const filePath = `public/data/blogs/${deleteFileName}`;
+
+        // Delete the Blog file
+        fs.unlink(filePath, (err) => {
+            if (err) {
+                console.error(`Server: ${err}`);
+                console.log(`Server: File ${filePath} doesn't exist !`);
+                return res.status(500).json({ error: 'Error deleting file', details: err.message });
+            }
+            console.log(`Server: File ${filePath} has been successfully removed.`);
+            // OK Header Sent
+            res.sendStatus(201);
+        });
+    } else {
+        console.log(`Server: File ${filePath} doesn't exist !`);
+        res.status(404).json({ error: 'File not found' });
     }
 });
 
