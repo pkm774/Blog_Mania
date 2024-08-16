@@ -202,6 +202,10 @@ app.get('/about', (req, res) => {
     res.render('about.ejs');
 });
 
+/*app.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});*/
+
 app.listen(process.env.PORT || 8080, () => {
     console.log(`Server running at ${process.env.PORT}/`);
 });
