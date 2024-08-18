@@ -1,7 +1,7 @@
 <%- include('partials/header.ejs') %>
 <blog>
   <% if (allBlogs.size > 0) { %>
-  <div class="blogPage1">
+  <div class="container">
     <ul class="list-unstyled">
       <% for (var i = 0; i < allBlogs.size ; i++) { %>
       <li>
@@ -13,9 +13,9 @@
             </div>
           </div>
           <div class="d-flex flex-row justify-between gap-3 buttonsMargin">
-            <button class="btn btn-outline-info <%# rounded-pill %> blogButtons blogViewButton" type="button" id="<%= i %>">View</button>
-            <button class="btn btn-outline-warning <%# rounded-pill %> blogButtons blogEditButton" type="button" id="<%= i %>">Edit</button>
-            <button class="btn btn-outline-danger <%# rounded-pill %> blogButtons blogDeleteButton" type="button" id="<%= i %>">Delete</button>
+            <button class="btn btn-outline-info <%# rounded-pill %> blogButtons blogViewButton" type="button" id="<%=i%>">View</button>
+            <button class="btn btn-outline-warning <%# rounded-pill %> blogButtons blogEditButton" type="button" id="<%=i%>">Edit</button>
+            <button class="btn btn-outline-danger <%# rounded-pill %> blogButtons blogDeleteButton" type="button" id="<%=i%>">Delete</button>
           </div>
         </div>
       </li>
@@ -28,11 +28,17 @@
     </script>
   </div>
   <% } else { %>
-  <div class="blogPage2">
-    <div class="">
-      <h3 id="noBlogs">Create a Blogs To show !</h3>
+  <div class="container">
+    <div class="container-mod">
+      <h3 id="noBlogs">No articles found!</h3>
     </div>
   </div>
   <% } %>
 </blog>
-<%- include('partials/nologofooter.ejs') %>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="scripts/view.js" charset="utf-8"></script>
+<script src="scripts/edit.js" charset="utf-8"></script>
+<script src="scripts/delete.js" charset="utf-8"></script>
+</body>
+</html>

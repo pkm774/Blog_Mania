@@ -1,15 +1,14 @@
 <%- include('partials/header.ejs') %>
 <create>
-  <div class="createPage py-4">
+  <div class="container py-4">
     <div class="input-group" id="createDiv">
-      <div id="nameInputArea">
-        <textarea class="form-control" placeholder="Your name" aria-label="With textarea" id="nameInputBox"></textarea>
-      </div>
       <div id="titleInputArea">
-        <textarea class="form-control" placeholder="Your blog tittle" aria-label="With textarea" id="tittleInputBox"></textarea>
+        <input type="text" class="form-control" id="titleInputBox" <%# name="title" %> placeholder="Blog title" required>
       </div>
-      <div id="blogInputArea">
-        <textarea class="form-control" placeholder="Type your blog....." aria-label="With textarea" id="blogInputBox"></textarea>
+      <div id="editor">
+      </div>
+      <div id="nameInputArea">
+        <input type="text" class="form-control" id="nameInputBox" <%# name="author" %> placeholder="Your name" required>
       </div>
       <div id="inputButton">
         <a href="/save">
@@ -21,4 +20,11 @@
     </div>
   </div>
 </create>
-<%- include('partials/nologofooter.ejs') %>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- Main Quill library -->
+<%- include('partials/quill.ejs') %>
+<script src="scripts/util.js" charset="utf-8"></script>
+</body>
+
+</html>
