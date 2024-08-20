@@ -4,20 +4,20 @@
     <div class="bd-edit m-0 border-0">
       <div class="mb-3">
         <label for="formControlInput2" class="form-label">Blog Title</label>
-        <input type="text" class="form-control" id="formControlInput2" value="<% if(locals.passedData) { %><%=passedData.tittle%><% } else { %>NaN<% } %>">
+        <input type="text" class="form-control" id="formControlInput2" value="<% if(locals.passedData) { %><%=locals.passedData.title%><% } else { %>NaN<% } %>">
       </div>
       <div class="mb-3">
         <label for="formControlTextarea" class="form-label">Blog Body</label>
         <div id="editor">
-          <% if(locals.passedData) { %><%- passedData.body %><% } else { %>NaN<% } %>
+          <% if(locals.passedData) { %><%- locals.passedData.body %><% } else { %>NaN<% } %>
         </div>
       </div>
       <div class="mb-3">
         <label for="formControlInput1" class="form-label">Blogger Name</label>
-        <input type="text" class="form-control" id="formControlInput1" value="<% if(locals.passedData) { %><%=passedData.name%><% } else { %>NaN<% } %>" aria-label="Disabled input example" disabled readonly>
+        <input type="text" class="form-control" id="formControlInput1" value="<% if(locals.passedData) { %><%=locals.passedData.name%><% } else { %>NaN<% } %>" aria-label="Disabled input example" disabled readonly>
       </div>
       <div id="inputButton">
-        <button type="button" class="btn btn-success btn-md px-4 gap-3" blogId="<% if(locals.id) { %><%=id%><% } %>" id="appendButton">
+        <button type="button" class="btn btn-success btn-md px-4 gap-3" blogId="<% if(locals.passedData) { %><%=locals.passedData.id%><% } %>" id="appendButton">
           Save
         </button>
       </div>

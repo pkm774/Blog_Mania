@@ -2,14 +2,22 @@
 <view>
   <div class="container">
     <article id="viewArticle">
-      <div class="d-flex flex-column gap-1 align-items-start justify-content-center  text-decoration-none">
-        <h2 class="display-5 link-body-emphasis mb-1" id="viewBlogTittle"><%= blog.tittle %></h2>
-        <p class="blog-post-meta" id="viewBlogDateName">
-          <u><b>Date</b>:</u> <%= blog.date %>
-          <u><b>By</b>:</u> <%= blog.name %>
-        </p>
-        <div class="mb-3 quill-width" >
-          <div id="quill-container" style="text-align: justify;">
+      <div style="padding-top: 12px; padding-bottom: 12px;">
+        <div class="d-flex flex-column gap-2 align-items-start justify-content-center">
+          <h2 class="display-5 link-body-emphasis" id="viewBlogTittle"><%= blog.title %></h2>
+          <p class="blog-post-meta" id="viewBlogDateName">
+            <div class="d-flex flex-row align-items-start justify-content-between gap-3">
+              <div>
+                <b>Date</b>: <%= blog.formatted_date %>
+              </div>
+              <div>
+                <b>By</b>: <%= blog.name %>
+              </div>
+            </div>
+          </p>
+          <div class="quill-width">
+            <div id="quill-container" style="text-align: justify;">
+            </div>
           </div>
         </div>
       </div>
