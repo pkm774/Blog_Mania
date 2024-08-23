@@ -1,10 +1,10 @@
-# Blogging Mania V3.0
+# Blogging Mania V4.0
 
 A **simple**,**unique** and **stylish** Blog web application developed with the use of **FrontEnd** and **BackEnd**.
 
 ## Deployment
 
-Deployed Website: [blog-mania.onrender.com/](https://blog-mania.onrender.com)  
+Deployed Website (V 2.0): [blog-mania.onrender.com/](https://blog-mania.onrender.com)  
 You have to wait for atleast 1 min until website loads.  
 
 ![blogging_mania](./images/home.png)
@@ -14,13 +14,15 @@ You have to wait for atleast 1 min until website loads.
   * HTML, **EJS (Embedded Java Script), JQuery**
   * CSS, **Bootstrap V5.3**
   * Javascript, **Quill**, **Highlight.js**
-  * **Express.js**, Nodejs, npm**
+  * **Express.js**, **Nodejs, npm**
   * REST APIs: **GET**, **POST**, **PATCH**, **DELETE**
   * **PostgresSQL RDBMS**
+  * **Login/LogOut & Register using bcrypt**
+  * **Session and Cookie using Passport & Strategy**
 
 ## Features
 
-The application will allow users to **create**, **view**, **edit** and **delete** blog posts. Posts will persist between sessions as PostgresSQL database is used in this version of the application.  
+This version of application will allow registered users to <b>create, view, edit and delete</b> blog posts. Posts will persist between sessions as Postgres is used as database. Non-Registered users will be able to see blogs only.  
   
 See images folder for more details.
 

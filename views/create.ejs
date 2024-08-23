@@ -8,7 +8,10 @@
       <div id="editor">
       </div>
       <div id="nameInputArea">
-        <input type="text" class="form-control" id="nameInputBox" <%# name="author" %> placeholder="Your name" required>
+        <input type="text" class="form-control" id="nameInputBox" value="<%= locals.name %>" placeholder="Your name" required>
+      </div>
+      <div id="emailArea">
+        <input type="email" class="form-control" id="emailInputBox" value="<%= locals.email %>" placeholder="Your Email" disabled readonly>
       </div>
       <div id="inputButton">
         <a href="/save">

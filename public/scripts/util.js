@@ -45,7 +45,9 @@ $(document).ready(function () {
 
         let bloggerName = $("#nameInputBox").val();
         let bloggingTitle = $("#titleInputBox").val();
+        let bloggerEmail = $("#emailInputBox").val();
         let bloggingData = quill.root.innerHTML;  // Get the HTML content from Quill
+        console.log(bloggerEmail);
 
         // Function to check for forbidden characters
         function containsForbiddenChars(value) {
@@ -75,16 +77,17 @@ $(document).ready(function () {
         }
 
         let data = {
-            name: bloggerName,
             title: bloggingTitle,
-            blog: bloggingData
+            blog: bloggingData,
+            name: bloggerName,
+            email: bloggerEmail
         };
 
         $.post('/save', data)
             .done((data, textStatus, jqXHR) => {
                 if (jqXHR.status === 201) {
                     alert('Blog post created successfully');
-                    window.location.reload(false);
+                    window.location.href = '/home';
                 }
             })
             .fail((jqXHR, textStatus, errorThrown) => {
@@ -101,12 +104,12 @@ $(document).ready(function () {
         let bloggingBody = quill.root.innerHTML;
 
         if (bloggingBody === 'NaN' || bloggingTitle === 'NaN' || (bloggingBody === 'NaN' && bloggingTitle === 'NaN')) {
-            alert("Redirecting to BLOG page again");
-            window.location.href = '/blogs';
+            alert("Redirecting to home page again");
+            window.location.href = '/home';
             return;
         } else if (!bloggingBody || !bloggingTitle || (!bloggingBody && !bloggingTitle)) {
             alert("Input Fields are Empty !");
-            window.location.href = '/blogs';
+            window.location.href = '/home';
             return;
         }
 
@@ -130,7 +133,7 @@ $(document).ready(function () {
                 success: function (data, textStatus, jqXHR) {
                     if (jqXHR.status === 200) {
                         alert('Client: Blog post updated successfully');
-                        window.location.href = '/blogs';
+                        window.location.href = '/home';
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
