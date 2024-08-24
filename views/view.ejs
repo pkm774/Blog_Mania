@@ -34,7 +34,6 @@
   }
 </style>
 <%- include('partials/quill.ejs') %>
-<%- include('partials/nologofooter.ejs') %>
 <script>
   var quill = new Quill('#quill-container', {
     theme: 'snow',
@@ -46,3 +45,4 @@
   });
   quill.root.innerHTML = `<%- blog.body %>`;
 </script>
+<%- include('partials/nologofooter.ejs') %>

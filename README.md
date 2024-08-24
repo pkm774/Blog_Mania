@@ -1,4 +1,4 @@
-# Blogging Mania V4.0
+# Blogging Mania V4.5
 
 A **simple**,**unique** and **stylish** Blog web application developed with the use of **FrontEnd** and **BackEnd**.
 
@@ -18,11 +18,12 @@ You have to wait for atleast 1 min until website loads.
   * REST APIs: **GET**, **POST**, **PATCH**, **DELETE**
   * **PostgresSQL RDBMS**
   * **Login/LogOut & Register using bcrypt**
-  * **Session and Cookie using Passport & Strategy**
+  * **Local and Google strategy for Login and Sign Up**
+  * **Session and Cookie using Passport**
 
 ## Features
 
-This version of application will allow registered users to <b>create, view, edit and delete</b> blog posts. Posts will persist between sessions as Postgres is used as database. Non-Registered users will be able to see blogs only.  
+This version of application will allow registered users to <b>create, view, edit and delete</b> blog posts. Posts will persist between sessions as Postgres is used as database. Non-Registered users will be able to see blogs only. User can register/login themselves using local strategy or google strategy.
   
 See images folder for more details.
 

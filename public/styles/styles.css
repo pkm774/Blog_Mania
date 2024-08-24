@@ -90,7 +90,6 @@ div {
 }
 
 .navButton {
-  color: #8C3061;
   font-size: 16px;
   font-family: "Manrope", sans-serif;
   font-style: normal;
@@ -101,6 +100,7 @@ div {
 }
 
 .nav-link-mod {
+  color: #8C3061;
   display: block;
   padding: 0.5rem;
   text-decoration: none;
@@ -124,7 +124,7 @@ div {
   align-items: center;
 }
 
-/* Home Page */
+/* / Page */
 .homePage {
   position: relative;
   display: flex;
@@ -220,10 +220,12 @@ div {
   font-family: "Manrope", sans-serif;
   font-style: normal;
   color: #134B70;
+  height: 60px;
+  font-size: 3rem;
+  margin-top: 10px;
 }
 
 .navhomeButton {
-  color: #E85C0D;
   font-size: 16px;
   font-family: "Manrope", sans-serif;
   font-style: normal;
@@ -234,6 +236,7 @@ div {
 }
 
 .navhomeButton-mod {
+  color: #E85C0D;
   display: block;
   padding: 0.5rem;
   text-decoration: none;
@@ -248,16 +251,16 @@ div {
 }
 
 .navhomeButton-logout {
-  color: #000;
-  font-size: 16px;
+  font-size: 14px;
   font-family: "Manrope", sans-serif;
   font-style: normal;
-  min-width: 100px;
+  min-width: 80px;
   text-align: center;
   flex: 0 1 auto;
 }
 
 .navhomeButton-logout-mod {
+  color: #000;
   display: block;
   padding: 0.5rem;
   text-decoration: none;
@@ -464,6 +467,45 @@ li {
   font-family: "Times New Roman", Times, serif;
 }
 
+/* Warning */
+#warning-header {
+  font-family: "Tinos", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Profile */
+.alignProfile {
+  display: flex;
+  gap: 30px;
+  flex-direction: row;
+}
+
+.profile-info {
+  text-align: justify;
+}
+
+.profile-width {
+  width: 30%;
+}
+
+.profile-blogs-width {
+  width: 70%;
+}
+
+@media (max-width: 456px) {
+  .alignProfile {
+    flex-direction: column;
+  }
+
+  .profile-width {
+    width: 100%;
+  }
+  
+  .profile-blogs-width {
+    width: 100%;
+  }
+}
 
 /* Media Query Breakpoint */
 @media (min-width: 993px) and (max-width: 1200px) {
