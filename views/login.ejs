@@ -35,6 +35,11 @@
       </style>
       <div class="row d-flex justify-content-center">
         <div class="col-md-7 col-lg-5 col-xl-5">
+          <% if(locals.message) {  %>
+            <div id="messageAlert" class="alert alert-danger" role="alert">
+              <%= locals.message %>
+            </div>
+          <% } %>
           <div>
             <h1 style="margin: 20px 0">Log in</h1>
             <div style="width: 100%">
@@ -68,7 +73,7 @@
                   Remember me
                 </label>
               </div>
-              <a href="#!">Forgot password?</a>
+              <a href="/forgot-password">Forgot password?</a>
             </div>
             <!-- Submit button -->
             <button type="submit" class="btn btn-primary btn-block mb-3 sendToSaveValue">

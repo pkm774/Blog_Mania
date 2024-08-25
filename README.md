@@ -1,10 +1,10 @@
-# Blogging Mania V4.5
+# Blogging Mania V5.0
 
 A **simple**,**unique** and **stylish** Blog web application developed with the use of **FrontEnd** and **BackEnd**.
 
 ## Deployment
 
-Deployed Website (V 2.0): [blog-mania.onrender.com/](https://blog-mania.onrender.com)  
+Deployed Website (V 5.0): [pkm774.line.pm](https://pkm774.line.pm/)  
 You have to wait for atleast 1 min until website loads.  
 
 ![blogging_mania](./images/home.png)
@@ -20,10 +20,11 @@ You have to wait for atleast 1 min until website loads.
   * **Login/LogOut & Register using bcrypt**
   * **Local and Google strategy for Login and Sign Up**
   * **Session and Cookie using Passport**
+  * **Password reset link using nodemailer**
 
 ## Features
 
-This version of application will allow registered users to <b>create, view, edit and delete</b> blog posts. Posts will persist between sessions as Postgres is used as database. Non-Registered users will be able to see blogs only. User can register/login themselves using local strategy or google strategy.
+This version of application will allow registered users to <b>create, view, edit and delete</b> blog posts. Posts will persist between sessions as Postgres is used as database. Non-Registered users will be able to see blogs only. User can register/login themselves using local strategy or google strategy. User can also reset their password and get reset link on their email.
   
 See images folder for more details.
 
