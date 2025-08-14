@@ -1,6 +1,24 @@
 <%- include('partials/header.ejs') %>
 <blog>
   <div class="blogPage">
+    <% if (allBlogs.length > 0) { %>
+    <ul class="list-unstyled">
+      <% for (var i = 0; i < allBlogs.length ; i++) { %> 
+      <li>
+        <a class="d-flex flex-column flex-lg-row gap-5 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"  href="/view?postId=<%= i %>">
+          <div class="col-lg-8">
+            <h6 class="mb-0" id="blogBodyTittle"> <%= allBlogs[i].tittle %></h6>
+            <small class="text-body-secondary" id="blogBodyDate"><%= allBlogs[i].date %></small>
+          </div>
+        </a>
+      </li>
+      <% } %>
+    </ul>
+    <% } else { %>
+      <div class="">
+        <h3 id="noBlogs">Sorry, No Blogs To show !</h3>
+      </div>
+    <% } %>
   </div>
 </blog>
 <%- include('partials/footer.ejs') %>
