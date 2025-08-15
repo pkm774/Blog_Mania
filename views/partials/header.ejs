@@ -17,25 +17,33 @@
   <%#------- Header -------%>
   <div class="headerContainer">
     <header class="py-5 border-bottom border-danger">
-      <div class="headerItems">
-        <div class="headerItem" id="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid container-fluid-mod headerItems">
           <a href="/" class="mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-            <span class="" id="navbarName">Blogging Mania</span>
+            <span id="navbarName">Blogging Mania</span>
           </a>
+          <button class="navbar-toggler navbar-toggler-mod collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-collapse collapse" id="navbarScroll">
+            <ul class="nav nav-pills navbar-nav-scroll navbarScrollButton" style="--bs-scroll-height: 200px;">
+              <div class="navButtons">
+                <li class="nav-item navButton">
+                  <a href="/" class="nav-link-mod">Home</a>
+                </li>
+                <li class="nav-item navButton">
+                  <a href="/create" class="nav-link-mod">Create</a>
+                </li>
+                <li class="nav-item navButton">
+                  <a href="/blogs" class="nav-link-mod">Blogs</a>
+                </li>
+                <li class="nav-item navButton">
+                  <a href="/about" class="nav-link-mod">About</a>
+                </li>
+              </div>
+            </ul>
+          </div>
         </div>
-        <div class="" id="navItems">
-          <ul class="nav nav-pills">
-            <li class="nav-item nav-button">
-              <a href="/" class="nav-link navItem">Home</a>
-            </li>
-            <li class="nav-item nav-button">
-              <a href="/blogs" class="nav-link navItem">Blogs</a>
-            </li>
-            <li class="nav-item nav-button">
-              <a href="/about" class="nav-link navItem">About</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      </nav>
     </header>
   </div>

@@ -13,11 +13,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const d = new Date();
 var blogDate = d.getDate() + '-' + d.getMonth() + '-' + d.getFullYear();
 
-// Declaration
+
+// Declaration of Blog Class and Map
+var blogsContainer = new Map();
 class BlogData {
     //constructor(uuid, tittle, name, date, body) {
-    constructor(tittle, name, date, body) {
-        // this.uuid = uuid;
+    constructor(filename, tittle, name, date, body) {
+        this.filename = filename;
         this.tittle = tittle;
         this.name = name;
         this.date = date;
@@ -25,7 +27,6 @@ class BlogData {
     }
 }
 
-var blogs = [];
 let counter = 1;
 
 // Create public/data folder
@@ -33,6 +34,7 @@ if (!fs.existsSync(`public/data`)) {
     fs.mkdirSync(`public/data`);
     console.log('Created public/data folder');
 }
+
 // Create public/data/blogs folder
 if (!fs.existsSync(`public/data/blogs`)) {
     fs.mkdirSync(`public/data/blogs`);
@@ -50,7 +52,6 @@ app.get('/create', (req, res) => {
 app.post('/save', (req, res) => {
     // Create blog file
     const fileName = req.body.name;
-    const data = 'Tittle: ' + req.body.tittle + '\nAuthor: ' + fileName + '\nDate: ' + blogDate + '\n\n' + req.body.blog;
 
     // Check if the file already exists
     let newFileName = fileName;
@@ -61,10 +62,14 @@ app.post('/save', (req, res) => {
         counter++;
     }
 
+    const filename = 'File Name: ' + newFileName + '.txt';
+    const blogData = '\nTittle: ' + req.body.tittle + '\nAuthor: ' + fileName + '\nDate: ' + blogDate + '\n\n' + req.body.blog;
+    const data = filename + blogData;
+
     fs.writeFile(`public/data/blogs/${newFileName}.txt`, data, (err) => {
         if (err) {
             console.error(err);
-            res.status(500).send('Internal server error');
+            res.status(500).send('Server: Internal server error');
         } else {
             // OK Header Sent
             res.sendStatus(201);
@@ -75,27 +80,30 @@ app.post('/save', (req, res) => {
 app.get('/blogs', async (req, res) => {
     try {
         const files = await fs.promises.readdir('public/data/blogs');
-        blogs = [];
+        blogsContainer = new Map();
+        var Id = 0;
 
         for (const file of files) {
             const filePath = `public/data/blogs/${file}`;
             const fileContent = await fs.promises.readFile(filePath, 'utf8');
 
             const lines = fileContent.split(/\r\n|\n/);
-            const title = lines[0].split(':')[1].trim();
-            const author = lines[1].split(':')[1].trim();
-            const date = lines[2].split(':')[1].trim();
-            const body = lines.slice(4).join('\n');
-            // const uuid = uuidv4();
+            const filename = lines[0].split(':')[1].trim();
+            const title = lines[1].split(':')[1].trim();
+            const author = lines[2].split(':')[1].trim();
+            const date = lines[3].split(':')[1].trim();
+            const body = lines.slice(5).join('\n');
+            const blogId = Id;
 
             // const blog = new BlogData(uuid, title, author, date, body);
-            const blog = new BlogData(title, author, date, body);
-            blogs.push(blog);
+            const blog = new BlogData(filename, title, author, date, body);
+            blogsContainer.set(Number(blogId), blog);
+            Id++;
         }
-        res.render('blogs.ejs', { allBlogs: blogs });
+        res.render('blogs.ejs', { allBlogs: blogsContainer });
     } catch (error) {
-        console.error('Error reading files:', error);
-        res.status(500).send('Internal server error');
+        console.error('Server: Error reading files:', error);
+        res.status(500).send('Server: Internal server error');
     }
 });
 
@@ -117,23 +125,77 @@ app.get('/blogs', async (req, res) => {
 // Using query parameters to pass additional information as key-value pairs in the URL.
 app.get('/view', (req, res) => {
     // Extract the blog post ID from the query parameter
-    const postId = req.query.postId;
+    const postId = req.query.postId.toString();
 
     // check the corresponding blog post data
-    if (!blogs[postId]) {
+    if (!blogsContainer.get(Number(postId))) {
         // Handle invalid post ID (e.g., show an error page)
-        res.status(404).send('Blog post not found');
+        res.status(404).send('Server: Blog post not found');
         return;
     }
 
     // Render the view.ejs template and pass the blog post data
-    res.render('view.ejs', { blog: blogs[postId] });
+    res.render('view.ejs', { blog: blogsContainer.get(Number(postId)) });
+});
+
+app.get('/edit', (req, res) => {
+    // Extract the blog post ID from the query parameter
+    const postId = req.query.postId;
+    res.render('edit.ejs', { passedData: blogsContainer.get(Number(postId)) });
+});
+
+app.post('/append', async (req, res) => {
+    try {
+        // Get filename from the body
+        const fileName = req.query.fileName;
+        const modifyFile = `public/data/blogs/${fileName}`;
+        const fileContent = await fs.promises.readFile(modifyFile, 'utf8');
+
+        // Split the content into lines
+        const lines = fileContent.split(/\r\n|\n/);
+
+        // Update the title line
+        lines[1] = `Tittle: ${req.body.tittle}`;
+
+        // Replace content from the 6th line onward with req.body.content
+        if (lines.length >= 6) {
+            lines.splice(5, lines.length - 5, req.body.blog);
+        }
+
+        // Join the lines back together
+        const updatedContent = lines.join('\n');
+
+        await fs.promises.writeFile(modifyFile, updatedContent, 'utf8');
+
+        // OK Header Sent
+        res.sendStatus(201);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server: Internal server error');
+    }
 });
 
 app.post('/delete', (req, res) => {
-    // TODO: 3. Post Update/Delete
-    res.sendStatus(201);
-    res.render('create.ejs');
+    const postId = Number(req.body.id);
+
+    if (blogsContainer.get(postId)) {
+        const deleteFileName = blogsContainer.get(postId).filename;
+        const filePath = `public/data/blogs/${deleteFileName}`;
+
+        // Delete the Blog file
+        fs.unlink(filePath, (err) => {
+            if (err) {
+                console.error(`Server: Error Deleting file: ${err}`);
+                return;
+            }
+            console.log(`Server: File ${filePath} has been successfully removed.`);
+        });
+
+        // OK Header Sent
+        res.sendStatus(201);
+    } else {
+        console.log('Server: No Such file !');
+    }
 });
 
 app.get('/about', (req, res) => {
