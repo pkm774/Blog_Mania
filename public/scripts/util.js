@@ -8,6 +8,19 @@ $("#saveButton").on('click', async (event) => {
     let bloggingTittle = $("#tittleInputBox").val();
     let bloggingData = $("#blogInputBox").val();
 
+    // Function to check for forbidden characters
+    function containsForbiddenChars(value) {
+        // check for '..' '/' '\'
+        const forbiddenChars = /(\.\.|\/|\\)/;
+        return forbiddenChars.test(value);
+    }
+
+    // Validate bloggerName for forbidden characters
+    if (containsForbiddenChars(bloggerName)) {
+        alert("Unsupported characters in blogger name!");
+        return;
+    }
+
     if (!bloggerName && !bloggerName && !bloggingData) {
         alert("Create a Blog to save !");
         return;
@@ -118,7 +131,7 @@ $("#appendButton").on('click', async (event) => {
         let url = `/append?fileName=${fileName}`;
 
         // Send blog text
-        $.post(url, data)
+        /*$.post(url, data)
             .done((data, textStatus, jqXHR) => {
                 if (jqXHR.status === 201) {
                     alert('Client: Blog post updated successfully', data);
@@ -127,11 +140,26 @@ $("#appendButton").on('click', async (event) => {
             })
             .fail((jqXHR, textStatus, errorThrown) => {
                 console.error('Client: Error updating blog post:', errorThrown);
-            });
+            });*/
+        $.ajax({
+            url: url,
+            type: 'PATCH',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function (data, textStatus, jqXHR) {
+                if (jqXHR.status === 200) {
+                    alert('Client: Blog post updated successfully');
+                    window.location.href = '/blogs';
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Client: Error updating blog post:', errorThrown);
+            }
+        });
     }
 });
 
-$(".blogDeleteButton").on('click', async (event) => {
+/*$(".blogDeleteButton").on('click', async (event) => {
     event.preventDefault();
     if (event.type === 'click') {
         // Get the clicked button's ID
@@ -148,6 +176,61 @@ $(".blogDeleteButton").on('click', async (event) => {
         })
         .fail((jqXHR, textStatus, errorThrown) => {
             console.error('Client: Error in deleting blog post: ', errorThrown);
+        });
+    }
+});*/
+$(".blogDeleteButton").on('click', async (event) => {
+    event.preventDefault();
+    if (event.type === 'click') {
+        // Get the clicked button's ID
+        const buttonId = event.target.id;
+        console.log(buttonId);
+
+        /* Data as json
+        $.ajax({
+            // the endpoint
+            url: '/delete',
+            // the HTTP method
+            type: 'DELETE',
+            // send data as JSON string
+            data: JSON.stringify({ id: buttonId }),
+            // specify JSON content type
+            contentType: 'application/json; charset=utf-8',
+            success: (data, textStatus, jqXHR) => {
+                if (jqXHR.status === 201) {
+                    alert('Blog post deleted successfully', data);
+                    // Refresh the page
+                    window.location.reload(false);
+                }
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error('Client: Error in deleting blog post: ', errorThrown);
+            }
+        });*/
+
+        $.ajax({
+            url: '/delete',
+            type: 'DELETE',
+            data: { id: buttonId },  // Send data as a URL-encoded string
+            success: (data, textStatus, jqXHR) => {
+                if (jqXHR.status === 201) {
+                    alert('Blog post deleted successfully', data);
+                    // Refresh the page
+                    window.location.reload(false);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status === 500) {
+                    console.error('Client: Error deleting file:', jqXHR.responseJSON.error);
+                    alert('Client: An error occurred while deleting the blog!');
+                } else if (jqXHR.status === 404) {
+                    console.error('Client: Blog file not found:', jqXHR.responseJSON.error);
+                    alert('Client: Blog does not exist!');
+                } else {
+                    console.error('Client: Unknown error:', errorThrown);
+                    alert('Client: An unknown error occurred.');
+                }
+            }
         });
     }
 });

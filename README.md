@@ -5,7 +5,7 @@ A **simple**,**unique** and **stylish** Blog web application developed with the 
 ## Deployment
 
 Deployed Website: [blog-mania.onrender.com/](https://blog-mania.onrender.com)
-   You have to wait for atleast 1 min until website loads.
+You have to wait for atleast 1 min until website loads.
 
 ![blogging_mania](./images/home.png)
 
@@ -15,10 +15,13 @@ Deployed Website: [blog-mania.onrender.com/](https://blog-mania.onrender.com)
   * CSS, **Bootstrap V5.3**
   * Javascript, **Express.js**
   * **Nodejs, npm**
+  * HTTP Requests: **GET**, **POST**, **PATCH**, **DELETE**
 
 ## Features
 
-The application will allow users to **create**, **view**, **edit** and **delete** blog posts. Posts will not persist   between sessions as no database is used in this version of the application.   See images folder for more details.
+The application will allow users to **create**, **view**, **edit** and **delete** blog posts. Posts will not persist between sessions as no database is used in this version of the application.
+
+See images folder for more details.
 
 ## Authors
 
