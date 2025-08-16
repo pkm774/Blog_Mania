@@ -252,6 +252,14 @@ div {
   margin-bottom: 10px;
 }
 
+#noBlogs {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 20px;
+  margin: 15px 0;
+}
+
 /* View Page */
 .viewPage {
   position: relative;
@@ -280,6 +288,49 @@ div {
   margin-right: 30px;
   position: relative;
   height: 550px;
+  height: auto;
+  padding: 15px;
+}
+
+.aboutTittle-div {
+  position: relative;
+  text-align: center;
+}
+
+#aboutTittle {
+  font-family: "Tinos", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 40px;
+}
+
+.aboutBody-div {
+  position: relative;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: 17px;
+  word-wrap: break-word;
+  /* long words break into the next line */
+  word-break: break-word;
+  font-style: normal;
+  margin: 0 auto;
+  /* container doesn’t overflow the screen */
+  width: 750px;
+  max-width: 100%;
+  line-height: 1.5;
+}
+
+.aboutBody-div,
+p,
+.aboutBody-div,
+ul,
+li {
+  word-wrap: break-word;
+  word-break: break-word;
+  /* text wraps normally */
+  white-space: normal;
+  text-align: justify;
 }
 
 /* footer */
@@ -380,47 +431,47 @@ div {
 /* Media Query Breakpoint */
 @media (max-width: 992px) {
   .headerItems {
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-      flex-direction: row;
-      gap: 10px;
-      width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
   }
 
   .headerItem {
-      width: 100%;
+    width: 100%;
   }
 
   .navbar-toggler-mod {
-      align-self: flex-start;
-      margin-left: 0;
+    align-self: flex-start;
+    margin-left: 0;
   }
 
   .navbar-collapse.collapse {
-      width: 100%;
-      flex-grow: 1;
-      justify-content: flex-start;
-      transition: none;
+    width: 100%;
+    flex-grow: 1;
+    justify-content: flex-start;
+    transition: none;
   }
 
   .navButtons {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-      width: 100%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
   }
 
   .navButton {
-      padding: 7.5px 0;
+    padding: 7.5px 0;
   }
 
   #navbarName {
-      font-size: 3rem;
-      text-align: left;
-      width: 100%;
+    font-size: 3rem;
+    text-align: left;
+    width: 100%;
   }
 }
 
