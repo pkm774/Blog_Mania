@@ -1,11 +1,11 @@
-# Blogging Mania
+# Blogging Mania V2.0
 
 A **simple**,**unique** and **stylish** Blog web application developed with the use of **FrontEnd** and **BackEnd**.
 
 ## Deployment
 
-Deployed Website: [blog-mania.onrender.com/](https://blog-mania.onrender.com)
-You have to wait for atleast 1 min until website loads.
+Deployed Website: [blog-mania.onrender.com/](https://blog-mania.onrender.com)  
+You have to wait for atleast 1 min until website loads.  
 
 ![blogging_mania](./images/home.png)
 
@@ -15,12 +15,13 @@ You have to wait for atleast 1 min until website loads.
   * CSS, **Bootstrap V5.3**
   * Javascript, **Express.js**
   * **Nodejs, npm**
-  * HTTP Requests: **GET**, **POST**, **PATCH**, **DELETE**
+  * REST APIs: **GET**, **POST**, **PATCH**, **DELETE**
+  * **Quill**, **Highlight.js**
 
 ## Features
 
-The application will allow users to **create**, **view**, **edit** and **delete** blog posts. Posts will not persist between sessions as no database is used in this version of the application.
-
+The application will allow users to **create**, **view**, **edit** and **delete** blog posts. Posts will not persist between sessions as no database is used in this version of the application.  
+  
 See images folder for more details.
 
 ## Authors
@@ -30,7 +31,7 @@ See images folder for more details.
 
 ## Acknowledgments
 
-  * A Capstone Project developed under Web Development Bootcamp by Angela Yu.
+  * A Full Stack Capstone Project developed under Web Development Bootcamp by Angela Yu.
 
 ## License
 

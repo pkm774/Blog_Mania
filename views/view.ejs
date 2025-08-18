@@ -1,14 +1,40 @@
 <%- include('partials/header.ejs') %>
 <view>
-  <div class="viewPage">
+  <div class="container">
     <article id="viewArticle">
-      <div class="blog-post">
-        <h2 class="display-5 link-body-emphasis mb-1" id="vieBlogTittle"><%= blog.tittle %></h2>
-        <p class="blog-post-meta" id="viewBlogDateName"><u><b>Date</b>:</u> <%= blog.date %> <u><b>By</b>:</u> <%= blog.name %></p>
-        <%# replace \n with br {between} //g %>
-        <p style="text-align: justify;"><%- blog.body.replace(/\n/g, '<br>') %></p>
+      <div class="d-flex flex-column gap-1 align-items-start justify-content-center  text-decoration-none">
+        <h2 class="display-5 link-body-emphasis mb-1" id="viewBlogTittle"><%= blog.tittle %></h2>
+        <p class="blog-post-meta" id="viewBlogDateName">
+          <u><b>Date</b>:</u> <%= blog.date %>
+          <u><b>By</b>:</u> <%= blog.name %>
+        </p>
+        <div class="mb-3 quill-width" >
+          <div id="quill-container" style="text-align: justify;">
+          </div>
+        </div>
       </div>
     </article>
   </div>
 </view>
+<style>
+  .ql-editor.ql-blank {
+    padding: 10px auto !important;
+  }
+  .quill-width {
+    height: 100%;
+    width: 100%;
+  }
+</style>
+<%- include('partials/quill.ejs') %>
 <%- include('partials/nologofooter.ejs') %>
+<script>
+  var quill = new Quill('#quill-container', {
+    theme: 'snow',
+    readOnly: true,
+    modules: {
+      syntax: true,
+      toolbar: false
+    }
+  });
+  quill.root.innerHTML = `<%- blog.body %>`;
+</script>

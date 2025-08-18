@@ -1,7 +1,14 @@
 /* Universal */
-.headerContainer {
-  padding-left: 30px;
-  padding-right: 30px;
+body {
+  background-color: #f7f9fc;
+}
+
+.container {
+  margin: 15px auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  height: auto;
 }
 
 div {
@@ -10,10 +17,10 @@ div {
 }
 
 .bd-edit {
-  --bd-padding: 2rem;
-  --bs-border-color: black;
+  --bd-padding: 1rem;
+  --bs-border-color: rgb(110, 105, 105);
   position: relative;
-  padding: var(--bd-padding);
+  padding: var(--bd-padding) 0;
   border: solid var(--bs-border-color);
   border-width: 1px 0;
 }
@@ -81,20 +88,23 @@ div {
   text-decoration: none;
   border-radius: 0.375rem;
   background: 0 0;
-  border: 0.5px solid #982B1C;
+  border: 0.5px solid #8C3061;
 }
 
 .navButton {
-  color: #982B1C;
+  color: #8C3061;
   font-size: 16px;
   font-family: "Manrope", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   padding: 7.5px 15px;
+  width: 100px;
+  height: auto;
+  text-align: center;
 }
 
 .nav-link-mod:hover {
-  background-color: #982B1C;
+  background-color: #8C3061;
   color: white;
 }
 
@@ -126,6 +136,7 @@ div {
   position: relative;
   height: 500px;
   width: 800px;
+  border-radius: 8px;
   border: 5px solid #508C9B;
 }
 
@@ -182,11 +193,6 @@ div {
   font-family: "Helvetica", "Arial", sans-serif;
 }
 
-.createPage {
-  margin-right: 30px;
-  margin-left: 30px;
-}
-
 #createDiv {
   display: flex;
   gap: 10px;
@@ -196,12 +202,46 @@ div {
 #nameInputBox,
 #tittleInputBox {
   width: 100%;
-  height: 30px;
 }
 
-#blogInputBox {
-  width: 100%;
-  height: 370px;
+#editor {
+  height: 400px;
+}
+
+.ql-toolbar.ql-snow {
+  border: 0.5px solid #dee2e6 !important;
+  border-radius: 0.375rem !important;
+  margin: 0 !important;
+}
+
+.ql-editor {
+  border: 0.5px solid #dee2e6 !important;
+  border-radius: 0.375rem !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+}
+
+.ql-editor.ql-blank {
+  border: 0.5px solid #dee2e6 !important;
+  border-radius: 0.375rem !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+}
+
+.ql-editor.ql-blank::before {
+  font-style: normal !important;
+  font-size: 1rem !important;
+  color: #45494d !important;
+}
+
+.ql-container {
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.ql-container.ql-snow {
+  position: relative !important;
+  margin: 0 !important;
 }
 
 /* Blog Page */
@@ -211,20 +251,6 @@ div {
   font-style: normal;
   width: 100%;
   margin-top: 10px;
-}
-
-.blogPage1 {
-  margin-left: 30px;
-  margin-right: 30px;
-  position: relative;
-  height: 100%;
-}
-
-.blogPage2 {
-  margin-left: 30px;
-  margin-right: 30px;
-  position: relative;
-  height: 550px;
 }
 
 #blogBodyTittle {
@@ -260,18 +286,20 @@ div {
   margin: 15px 0;
 }
 
+.container-mod {
+  background-color: #f7f9fc;
+  box-shadow: 0 0 0 #f7f9fc;
+  text-align: center;
+}
+
 /* View Page */
-.viewPage {
-  position: relative;
-  height: 100%;
+
+p {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-#viewArticle {
-  position: relative;
-  margin: 2rem 2rem;
-}
-
-#vieBlogTittle {
+#viewBlogTittle {
   font-family: "Playfair Display", serif;
   font-style: normal;
   font-weight: 600;
@@ -279,19 +307,16 @@ div {
 
 #viewBlogDateName {
   margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 15px;
 }
 
-/* About Page */
-.aboutPage {
-  margin-left: 30px;
-  margin-right: 30px;
-  position: relative;
-  height: 550px;
-  height: auto;
-  padding: 15px;
+.viewBlogBody {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
+/* About Page */
 .aboutTittle-div {
   position: relative;
   text-align: center;
@@ -358,13 +383,18 @@ li {
 
 
 /* Media Query Breakpoint */
-@media (min-width: 991px) and (max-width: 1120px) {
+@media (min-width: 993px) and (max-width: 1200px) {
   .homePage {
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
+  }
+
+  .headerItem {
+    display: flex;
+    justify-content: center;
   }
 
   .bgImage {
@@ -393,42 +423,147 @@ li {
 }
 
 /* Media Query Breakpoint */
-@media (min-width: 891px) and (max-width: 991px) {
+@media (min-width: 768px) and (max-width: 992px) {
+  .headerItem {
+    display: flex;
+    justify-content: center;
+  }
+
   .homePage {
     position: relative;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    gap: 30px;
   }
 
   .bgImage {
     position: relative;
-    height: auto;
-    width: 750px;
-    border: 5px solid #508C9B;
-  }
-
-  .bgImgDiv {
-    position: relative;
+    height: 400px;
     width: auto;
-    height: auto;
-    margin: auto;
-  }
-
-  #infoText {
-    margin-top: 30px;
+    border: 5px solid #508C9B;
   }
 
   .bgTextDiv {
     position: relative;
     height: auto;
     width: auto;
-    margin: 30px auto;
+    margin: auto;
+  }
+
+  #welcomeText {
+    font-size: 2.8rem;
+  }
+
+  #infoText {
+    font-size: 2.3rem;
+  }
+
+  .buttonClass {
+    margin-top: 25px;
+    margin-bottom: 15px;
   }
 }
 
 /* Media Query Breakpoint */
+@media (min-width: 465px) and (max-width: 767px) {
+  .headerItem {
+    display: flex;
+    justify-content: center;
+  }
+
+  .homePage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .bgImage {
+    position: relative;
+    height: 300px;
+    width: auto;
+    border: 5px solid #508C9B;
+  }
+
+  .bgTextDiv {
+    position: relative;
+    height: auto;
+    width: auto;
+    margin: auto;
+  }
+
+  #welcomeText {
+    font-size: 2.2rem;
+  }
+
+  #infoText {
+    font-size: 1.8rem;
+  }
+
+  .buttonClass {
+    margin-top: 20px;
+    margin-bottom: 15px;
+  }
+}
+
+/* Media Query Breakpoint */
+@media (max-width: 464px) {
+  .headerItem {
+    display: flex;
+    justify-content: center;
+  }
+
+  .homePage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .bgImage {
+    position: relative;
+    height: 250px;
+    width: auto;
+    border: 5px solid #508C9B;
+  }
+
+  .bgTextDiv {
+    position: relative;
+    height: auto;
+    width: auto;
+    margin: auto;
+  }
+
+  #blogButtonText {
+    font-size: 20px;
+  }
+
+  #welcomeText {
+    font-size: 2rem;
+  }
+
+  #infoText {
+    font-size: 1.5rem;
+  }
+
+  .buttonClass {
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+
+  #footer {
+    flex-direction: column;
+  }
+
+  #iconHolder {
+    margin-top: 10px;
+  }
+}
+
+/* Media Query Breakpoint for nav scrooling*/
 @media (max-width: 992px) {
   .headerItems {
     display: flex;
@@ -465,7 +600,8 @@ li {
   }
 
   .navButton {
-    padding: 7.5px 0;
+    padding: 5.5px 0;
+    width: 70px;
   }
 
   #navbarName {
@@ -473,124 +609,5 @@ li {
     text-align: left;
     width: 100%;
   }
-}
 
-/* Media Query Breakpoint */
-@media (min-width: 701px) and (max-width: 890px) {
-
-  .headerItem {
-    display: flex;
-    justify-content: center;
-  }
-
-  .homePage {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-  }
-
-  .bgImage {
-    position: relative;
-    height: auto;
-    width: 700px;
-    border: 5px solid #508C9B;
-    margin: auto;
-  }
-
-  .bgImgDiv {
-    position: relative;
-    width: 700px;
-    margin: auto;
-  }
-
-  .bgTextDiv {
-    position: relative;
-    height: auto;
-    width: 700px;
-    margin: auto;
-  }
-}
-
-/* Media Query Breakpoint */
-@media (min-width: 465px) and (max-width: 700px) {
-  .headerItem {
-    display: flex;
-    justify-content: center;
-  }
-
-  .homePage {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-  }
-
-  .bgImage {
-    position: relative;
-    height: auto;
-    width: 500px;
-    border: 5px solid #508C9B;
-    margin: auto;
-  }
-
-  .bgTextDiv {
-    position: relative;
-    height: auto;
-    width: 500px;
-    margin: auto;
-  }
-}
-
-/* Media Query Breakpoint */
-@media (max-width: 464px) {
-  .headerItem {
-    display: flex;
-    justify-content: center;
-  }
-
-  .navbar-toggler-mod {
-    margin-left: 3px;
-    margin-top: 5px;
-  }
-
-  .homePage {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-  }
-
-  .bgImage {
-    position: relative;
-    height: 200px;
-    width: auto;
-    border: 5px solid #508C9B;
-  }
-
-  .bgTextDiv {
-    position: relative;
-    height: auto;
-    width: auto;
-    margin: auto;
-  }
-
-  #blogButtonText {
-    font-size: 20px;
-  }
-
-  #welcomeText {
-    font-size: 2.5rem;
-  }
-
-  #footer {
-    flex-direction: column;
-  }
-
-  #iconHolder {
-    margin-top: 10px;
-  }
 }

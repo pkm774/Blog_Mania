@@ -1,8 +1,6 @@
 import express from 'express';
-import bodyParser from "body-parser";
 import fs from 'fs';
 //import { v4 as uuidv4 } from 'uuid';
-import path from 'path';
 
 const hostname = '192.168.0.107';
 const port = 8080;
@@ -11,13 +9,11 @@ const app = express();
 app.use(express.static("public"));
 // For data passes by client as json
 app.use(express.json());
-// For data passes by client as encoded url
+// For data passes by client as encoded url (replace body parser)
 app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.urlencoded({ extended: true }));
 
 const d = new Date();
 var blogDate = d.getDate() + '-' + d.getMonth() + '-' + d.getFullYear();
-
 
 // Declaration of Blog Class and Map
 var blogsContainer = new Map();
@@ -49,10 +45,18 @@ if (!fs.existsSync(`public/data/blogs`)) {
 // remove '..' directory traversal characters
 function sanitizeFilename(filename) {
     return filename
-    // remove '..' directory traversal characters
+        // remove '..' directory traversal characters
         .replace(/(\.\.)+/g, '')
-    // remove '/' and '\' characters
+        // remove '/' and '\' characters
         .replace(/[\/\\]/g, '');
+}
+
+// check if URL includes protocol
+function sanitizeUrl(url) {
+    if (!/^https?:\/\//i.test(url)) {
+        return 'http://' + url;
+    }
+    return url;
 }
 
 app.get('/', (req, res) => {
@@ -78,7 +82,10 @@ app.post('/save', (req, res) => {
     }
 
     const filename = 'File Name: ' + newFileName + '.txt';
-    const blogData = '\nTittle: ' + req.body.tittle + '\nAuthor: ' + fileName + '\nDate: ' + blogDate + '\n\n' + req.body.blog;
+    const blog = req.body.blog.replace(/href="(www\.[^\s"]+)"/g, (match, p1) => {
+        return `href="${sanitizeUrl(p1)}"`;
+    });
+    const blogData = '\nTittle: ' + req.body.tittle + '\nAuthor: ' + fileName + '\nDate: ' + blogDate + '\n\n' + blog;
     const data = filename + blogData;
 
     fs.writeFile(`public/data/blogs/${newFileName}.txt`, data, (err) => {
@@ -156,7 +163,7 @@ app.get('/view', (req, res) => {
 app.get('/edit', (req, res) => {
     // Extract the blog post ID from the query parameter
     const postId = req.query.postId;
-    res.render('edit.ejs', { passedData: blogsContainer.get(Number(postId)) });
+    res.render('edit.ejs', { passedData: blogsContainer.get(Number(postId)), id: postId });
 });
 
 /*app.post('/append', async (req, res) => {
@@ -194,14 +201,14 @@ app.get('/edit', (req, res) => {
 app.patch('/append', async (req, res) => {
     try {
         // Get filename from the query
-        var fileName = req.query.fileName;
-        if (!fileName || typeof fileName !== 'string') {
-            return res.status(400).send('Invalid file name');
+        var blogId = req.query.blogId;
+        if (!blogId) {
+            return res.status(400).send('Invalid Blog Id');
         }
-        fileName = sanitizeFilename(fileName);
 
-        // filename already has its extension
-        const modifyFile = `public/data/blogs/${fileName}`;
+        const appendFileName = blogsContainer.get(Number(blogId)).filename;
+        const modifyFile = `public/data/blogs/${appendFileName}`;
+
         if (!fs.existsSync(modifyFile)) {
             return res.status(404).send('File not found');
         }
@@ -296,5 +303,5 @@ app.get('/about', (req, res) => {
 });*/
 
 app.listen(process.env.PORT || 8080, () => {
-    console.log(`Server running at ${process.env.PORT}/`);
+    console.log(`Server running at ${process.env.PORT || 8080}/`);
 });
