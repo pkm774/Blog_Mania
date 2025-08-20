@@ -44,7 +44,7 @@ $(document).ready(function () {
         event.preventDefault();
 
         let bloggerName = $("#nameInputBox").val();
-        let bloggingTittle = $("#titleInputBox").val();
+        let bloggingTitle = $("#titleInputBox").val();
         let bloggingData = quill.root.innerHTML;  // Get the HTML content from Quill
 
         // Function to check for forbidden characters
@@ -60,10 +60,10 @@ $(document).ready(function () {
             return;
         }
 
-        if (!bloggerName && !bloggerName && !bloggingData) {
+        if (!bloggingTitle && !bloggingData && !bloggerName) {
             alert("Create a Blog to save !");
             return;
-        } else if (!bloggingTittle) {
+        } else if (!bloggingTitle) {
             alert("Blog title is required !");
             return;
         } else if (!bloggingData) {
@@ -76,7 +76,7 @@ $(document).ready(function () {
 
         let data = {
             name: bloggerName,
-            tittle: bloggingTittle,
+            title: bloggingTitle,
             blog: bloggingData
         };
 
@@ -97,21 +97,21 @@ $(document).ready(function () {
     $("#appendButton").on('click', async (event) => {
         event.preventDefault();
 
-        let bloggingTittle = $("#formControlInput2").val();
+        let bloggingTitle = $("#formControlInput2").val();
         let bloggingBody = quill.root.innerHTML;
 
-        if (bloggingBody === 'NaN' || bloggingTittle === 'NaN' || (bloggingBody === 'NaN' && bloggingTittle === 'NaN')) {
+        if (bloggingBody === 'NaN' || bloggingTitle === 'NaN' || (bloggingBody === 'NaN' && bloggingTitle === 'NaN')) {
             alert("Redirecting to BLOG page again");
             window.location.href = '/blogs';
             return;
-        } else if (!bloggingBody || !bloggingTittle || (!bloggingBody && !bloggingTittle)) {
+        } else if (!bloggingBody || !bloggingTitle || (!bloggingBody && !bloggingTitle)) {
             alert("Input Fields are Empty !");
             window.location.href = '/blogs';
             return;
         }
 
         let data = {
-            tittle: bloggingTittle,
+            title: bloggingTitle,
             blog: bloggingBody
         };
 
@@ -122,17 +122,6 @@ $(document).ready(function () {
             // Send blog text
             let url = `/append?blogId=${blogId}`;
 
-            // Send blog text
-            /*$.post(url, data)
-                .done((data, textStatus, jqXHR) => {
-                    if (jqXHR.status === 201) {
-                        alert('Client: Blog post updated successfully', data);
-                        window.location.href = '/blogs';
-                    }
-                })
-                .fail((jqXHR, textStatus, errorThrown) => {
-                    console.error('Client: Error updating blog post:', errorThrown);
-                });*/
             $.ajax({
                 url: url,
                 type: 'PATCH',

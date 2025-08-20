@@ -293,7 +293,6 @@ div {
 }
 
 /* View Page */
-
 p {
   margin-top: 0;
   margin-bottom: 0;
@@ -303,11 +302,10 @@ p {
   font-family: "Playfair Display", serif;
   font-style: normal;
   font-weight: 600;
+  margin: 0 !important;
 }
 
 #viewBlogDateName {
-  margin-top: 10px;
-  margin-bottom: 10px;
   font-size: 15px;
 }
 
