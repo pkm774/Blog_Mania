@@ -4,19 +4,54 @@
     <div class="bgImgDiv">
       <img class="bgImage flex-shrink-1" src="images/background.jpg" alt="Background image" />
     </div>
-    <div class="bgTextDiv ms-auto">
+    <div class="bgTextDiv">
       <h1 class="text-center flex-grow-1" id="welcomeText">Welcome to Blogging Mania</h1>
       <h3 class="text-center flex-grow-1" id="infoText">A creative Blogging platform for you</h3>
       <div class="buttonClass">
-        <div class="text-center" id="blogButtonText">Create Your First Blog</div>
+        <div class="text-center" id="blogButtonText">Sign Up to create Your First Blog</div>
         <div>
-          <a href="/create">
+          <a href="/signup">
             <button type="button" class="btn btn-primary btn-md px-4 gap-3" id="blogButton">
-              Create
+              Sign Up
             </button>
           </a>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="container" style="height: 700px;">
+    <div style="padding-top: 10px;">
+      <div class="d-flex justify-content-center home-blogs-header" style="height: 80px;">
+        <h1 class="home-blogs-header-text" style="height: 60px; font-size: 3rem;">Latest Blogs</h1>
+      </div>
+    </div>
+    <div class="overflow-auto" style="position: relative; height: 600px;">
+      <% if (locals.allBlogs.length > 0) { %>
+      <div class="">
+        <ul class="list-unstyled">
+          <% locals.allBlogs.forEach((rows) => { %>
+          <li>
+            <div style="margin: 2px auto;">
+              <a href="/view?postId=<%= rows.id %>" class="home-blogs">
+                <div class="d-flex flex-column flex-lg-row gap-5 align-items-start align-items-lg-center link-body-emphasis text-decoration-none">
+                  <div class="col-lg-8">
+                    <h6 class="mb-0" id="blogBodyTittle"> <%= rows.title %></h6>
+                    <h1 class="text-body-secondary" id="blogBodyDate"><%= rows.formatted_date %> <b>by</b> <%= rows.name %></h1>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </li>
+          <% }); %>
+        </ul>
+      </div>
+      <% } else { %>
+      <div class="container">
+        <div class="container-mod">
+          <h3 id="noBlogs">No articles found!</h3>
+        </div>
+      </div>
+      <% } %>
     </div>
   </div>
 </blog>

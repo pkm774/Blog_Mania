@@ -60,7 +60,7 @@ div {
   justify-content: flex-end;
   gap: 20px;
   flex-wrap: wrap;
-  width: 67px;
+  width: 70px;
 }
 
 .navbarScrollButton {
@@ -80,6 +80,24 @@ div {
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  width: 100%;
+}
+
+.navbarScrollButton {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.navButton {
+  color: #8C3061;
+  font-size: 16px;
+  font-family: "Manrope", sans-serif;
+  font-style: normal;
+  padding: 7.5px 15px;
+  min-width: 100px;
+  text-align: center;
+  flex: 0 1 auto;
 }
 
 .nav-link-mod {
@@ -89,18 +107,6 @@ div {
   border-radius: 0.375rem;
   background: 0 0;
   border: 0.5px solid #8C3061;
-}
-
-.navButton {
-  color: #8C3061;
-  font-size: 16px;
-  font-family: "Manrope", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  padding: 7.5px 15px;
-  width: 100px;
-  height: auto;
-  text-align: center;
 }
 
 .nav-link-mod:hover {
@@ -153,6 +159,8 @@ div {
   font-style: normal;
   font-size: 4rem;
   color: #134B70;
+  margin: 0;
+  height: auto;
 }
 
 #infoText {
@@ -160,8 +168,9 @@ div {
   font-family: "Source Serif 4", serif;
   font-style: normal;
   font-size: 25px;
-  margin-top: 20px;
   color: #134B70;
+  margin: 40px auto;
+  height: auto;
 }
 
 .buttonClass {
@@ -186,6 +195,80 @@ div {
 
 #blogButton {
   font-family: "Helvetica", "Arial", sans-serif;
+}
+
+.home-blogs {
+  display: block;
+  padding: 0.5rem;
+  text-decoration: none;
+  border-radius: 0.375rem;
+  background: 0 0;
+  border: 0.5px solid #125B9A;
+}
+
+.home-blogs:hover {
+  -webkit-text-fill-color: #fff;;
+  background-color: #0B8494;
+}
+
+.home-blogs-header{
+  border-radius: 0.375rem;
+  border: 0.5px solid #3795BD;
+}
+
+.home-blogs-header-text{
+  font-family: "Manrope", sans-serif;
+  font-style: normal;
+  color: #134B70;
+}
+
+.navhomeButton {
+  color: #E85C0D;
+  font-size: 16px;
+  font-family: "Manrope", sans-serif;
+  font-style: normal;
+  padding: 7px 15px;
+  min-width: 100px;
+  text-align: center;
+  flex: 0 1 auto;
+}
+
+.navhomeButton-mod {
+  display: block;
+  padding: 0.5rem;
+  text-decoration: none;
+  border-radius: 0.375rem;
+  background: 0 0;
+  border: 0.5px solid #E85C0D;
+}
+
+.navhomeButton-mod:hover {
+  background-color: #E85C0D;
+  color: white;
+}
+
+.navhomeButton-logout {
+  color: #000;
+  font-size: 16px;
+  font-family: "Manrope", sans-serif;
+  font-style: normal;
+  min-width: 100px;
+  text-align: center;
+  flex: 0 1 auto;
+}
+
+.navhomeButton-logout-mod {
+  display: block;
+  padding: 0.5rem;
+  text-decoration: none;
+  border-radius: 0.375rem;
+  background: 0 0;
+  border: 0.5px solid #000;
+}
+
+.navhomeButton-logout-mod:hover {
+  background-color: #000;
+  color: white;
 }
 
 /* Create Page */
@@ -258,6 +341,7 @@ div {
   font-style: normal;
   font-weight: 600;
   font-size: 2rem;
+  color: auto;
 }
 
 #blogBodyDate {
@@ -266,6 +350,7 @@ div {
   font-style: normal;
   font-size: 15px;
   margin: 8px 0;
+  color: auto;
 }
 
 .blogButtons {
@@ -590,6 +675,14 @@ li {
 
   .navButtons {
     margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .navbarScrollButton {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
