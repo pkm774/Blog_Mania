@@ -1,25 +1,31 @@
 <%- include('partials/header.ejs') %>
 <div class="container">
-  <div class="d-flex flex-row gap-4">
-    <div class="d-flex flex-column gap-4" style="width: 30%;">
-      <div class="border" style="height: 60px; margin: 5px 0; font-size: 2.5rem; margin-top: 20px; border-radius: 0.375rem;">
-        Profile
+  <div class="alignProfile">
+    <div class="d-flex flex-column gap-4 profile-width">
+      <div class="border-bottom" style="margin-top: 20px;">
+        <div style="height: 50px; margin: 5px 0; font-size: 2.5rem;">
+          Profile
+        </div>
       </div>
-      <div style="font-size: 1rem;">
-        <p><b>User Id:</b> <%= locals.user.id %> </p>
-        <br>
-        <p><b>Name:</b> <%= locals.user.fname + ' ' + locals.user.lname %> </p>
-        <br>
-        <p><b>Email:</b> <%= locals.user.email %> </p>
+      <div class="d-flex flex-column justify-content-start gap-1" style="font-size: 1rem;">
+        <div class="profile-info">
+          <p><b>User Id:</b> <%= locals.user.id %> </p>
+        </div>
+        <div class="profile-info">
+          <p><b>Name:</b> <%= locals.user.fname + ' ' + locals.user.lname %> </p>
+        </div>
+        <div class="profile-info">
+          <p><b>Email:</b> <%= locals.user.email %> </p>
+        </div>
       </div>
       <div class="navhomeButton-logout" style="width: 10%">
         <a href="/logout" class="navhomeButton-logout-mod">Log Out</a>
       </div>
     </div>
-    <div class="d-flex flex-column gap-4" style="width: 70%;">
-      <div class="d-flex flex-row justify-content-between align-items-center border" style="margin-top: 20px; border-radius: 0.375rem;">
-        <div style="height: 50px; margin: 5px 0; font-size: 2.5rem;">
-          My Blogs
+    <div class="d-flex flex-column gap-4 profile-blogs-width">
+      <div class="d-flex flex-row justify-content-between align-items-center border-bottom" style="margin-top: 20px;">
+        <div class="" style="height: 50px; margin: 5px 0; font-size: 2.5rem;">
+          Articles
         </div>
         <div class="navhomeButton">
           <a href="/create" class="navhomeButton-mod">Create Blog</a>
@@ -30,7 +36,7 @@
         <ul class="list-unstyled">
           <% locals.allBlogs.forEach((rows) => { %>
           <li>
-            <div class="border-top border-bottom">
+            <div class="border-bottom">
               <div class="d-flex flex-column flex-lg-row gap-5 align-items-start align-items-lg-center link-body-emphasis text-decoration-none">
                 <div class="col-lg-8">
                   <h6 class="mb-0" id="blogBodyTittle"> <%= rows.title %></h6>

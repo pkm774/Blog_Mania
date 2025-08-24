@@ -22,7 +22,7 @@
   <div class="container" style="height: 700px;">
     <div style="padding-top: 10px;">
       <div class="d-flex justify-content-center home-blogs-header" style="height: 80px;">
-        <h1 class="home-blogs-header-text" style="height: 60px; font-size: 3rem;">Latest Blogs</h1>
+        <h1 class="home-blogs-header-text">Latest Blogs</h1>
       </div>
     </div>
     <div class="overflow-auto" style="position: relative; height: 600px;">
@@ -31,8 +31,8 @@
         <ul class="list-unstyled">
           <% locals.allBlogs.forEach((rows) => { %>
           <li>
-            <div style="margin: 2px auto;">
-              <a href="/view?postId=<%= rows.id %>" class="home-blogs">
+            <div style="margin: 4px auto;">
+              <a href="/homeview?postId=<%= rows.id %>" class="home-blogs">
                 <div class="d-flex flex-column flex-lg-row gap-5 align-items-start align-items-lg-center link-body-emphasis text-decoration-none">
                   <div class="col-lg-8">
                     <h6 class="mb-0" id="blogBodyTittle"> <%= rows.title %></h6>
