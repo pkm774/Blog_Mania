@@ -6,6 +6,8 @@ import session from "express-session";
 import passport from "passport";
 import { Strategy } from "passport-local"; // local strategy
 import GoogleStrategy from "passport-google-oauth2"; // google strategy
+import { v4 as uuidv4 } from "uuid";
+import nodemailer from "nodemailer"; // sending email
 
 const hostname = "0.0.0.0";
 const port = 8080;
@@ -46,6 +48,15 @@ db.connect();
 
 // Populate random password
 const randomPass = process.env.RANDOM_PASS;
+const passResetLink = process.env.PASS_RESET_LINK;
+
+const transporter = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 // check if URL includes protocol
 function sanitizeUrl(url) {
@@ -73,23 +84,29 @@ app.post("/savesession", (req, res) => {
 // Login POST
 app.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
-    if (err) return next(err);
-    if (!user) return res.redirect("/login");
-
-    req.logIn(user, (err) => {
-      if (err) return next(err);
-
-      if (saveSession === "true") {
-        req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30;
-        req.session.maxAge = req.session.cookie.maxAge;
-        //console.log('Session will be saved for 30 days');
-      } else {
-        req.session.cookie.expires = false;
-        req.session.maxAge = null;
-        //console.log('Session will expire when the browser is closed');
-      }
-      return res.redirect("/home");
-    });
+    if (err) {
+      console.log('Server: authenticate error: ' + err);
+    }
+    if (user) {
+      req.logIn(user, (err) => {
+        if (err) {
+          console.log('Server: logIn error: ' + err);
+        }
+        if (saveSession === "true") {
+          req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30;
+          req.session.maxAge = req.session.cookie.maxAge;
+          //console.log('Session will be saved for 30 days');
+        } else {
+          req.session.cookie.expires = false;
+          req.session.maxAge = null;
+          //console.log('Session will expire when the browser is closed');
+        }
+        return res.redirect("/home");
+      });
+    } else {
+      const message = info.message;
+      res.render("login.ejs", { message });
+    }
   })(req, res, next);
 });
 
@@ -186,6 +203,102 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// Route for requesting a password reset
+// Show password reset request form
+app.get("/forgot-password", (req, res) => {
+  res.render("forgotpass.ejs");
+});
+
+// Handle password reset request
+app.post("/forgot-password", async (req, res) => {
+  const email = req.body.email;
+  const token = uuidv4();
+  // Current time + 1 hour
+  const expires = new Date(Date.now() + 3600000);
+
+  try {
+    const result = await db.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
+    if (result.rows.length > 0) {
+      await db.query(
+        "INSERT INTO password_resets (email, token, expires) VALUES ($1, $2, $3)",
+        [email, token, expires]
+      );
+      const resetUrl = `${passResetLink}${token}`;
+      // Send the email
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: "Password Reset link for Blogging Mania",
+        text: `You requested a password reset. Click the following link to reset your password: ${resetUrl}`,
+        html: `<p>You requested a password reset. Click the following link to reset your password: <a href="${resetUrl}">${resetUrl}</a></p>`,
+      });
+      console.log(`Password reset link: ${resetUrl}`);
+    }
+    res.render("forgotpass.ejs", {
+      message:
+        "If an account with that email exists, a password reset link has been sent. Check your email inbox/spam folder",
+    });
+  } catch (err) {
+    console.error("Error handling password reset request:", err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route for displaying the password reset form.
+// Show password reset form
+app.get("/reset-password/:token", async (req, res) => {
+  const token = req.params.token;
+  try {
+    const result = await db.query(
+      "SELECT * FROM password_resets WHERE token = $1 AND expires > NOW()",
+      [token]
+    );
+    if (result.rows.length > 0) {
+      res.render("resetpass.ejs", { token });
+    } else {
+      res.status(400).send("Password reset token is invalid or has expired.");
+    }
+  } catch (err) {
+    console.error("Error displaying password reset form:", err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Handle password reset
+app.post("/reset-password/:token", async (req, res) => {
+  const token = req.params.token;
+  if (req.body.password1 !== req.body.password2) {
+    console.log("Paasword1 and Password2 do not match!");
+    res.status(400).send("Paasword1 and Password2 do not match!");
+    return;
+  }
+  const newPassword = req.body.password2;
+
+  try {
+    const result = await db.query(
+      "SELECT * FROM password_resets WHERE token = $1 AND expires > $2",
+      [token, new Date()]
+    );
+    if (result.rows.length > 0) {
+      const email = result.rows[0].email;
+      const hash = await bcrypt.hash(newPassword, saltRounds);
+      await db.query("UPDATE users SET password = $1 WHERE email = $2", [
+        hash,
+        email,
+      ]);
+      await db.query("DELETE FROM password_resets WHERE email = $1", [email]);
+      res.redirect("/login");
+    } else {
+      res.status(400).send("Password reset token is invalid or has expired.");
+    }
+  } catch (err) {
+    console.error("Error resetting password:", err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // Web home page
 app.get("/", async (req, res) => {
   try {
@@ -201,21 +314,21 @@ app.get("/", async (req, res) => {
 
 // Using query parameters to pass additional information as key-value pairs in the URL.
 app.get("/homeview", async (req, res) => {
-    // Extract the blog post ID from the query parameter
-    const postId = Number(req.query.postId);
-    try {
-      const result = await db.query(
-        "SELECT id, name, title, body, TO_CHAR(date, 'DD Mon YYYY') AS formatted_date FROM blogs WHERE id=$1;",
-        [postId]
-      );
-      // Render the view.ejs template and pass the blog post data
-      res.render("view.ejs", { blog: result.rows[0] });
-    } catch (error) {
-      console.error("Server: Error database:", error);
-      // Handle invalid post ID (e.g., show an error page)
-      res.status(404).send(`Server: Blog post row with id ${postId} not found`);
-      return;
-    }
+  // Extract the blog post ID from the query parameter
+  const postId = Number(req.query.postId);
+  try {
+    const result = await db.query(
+      "SELECT id, name, title, body, TO_CHAR(date, 'DD Mon YYYY') AS formatted_date FROM blogs WHERE id=$1;",
+      [postId]
+    );
+    // Render the view.ejs template and pass the blog post data
+    res.render("view.ejs", { blog: result.rows[0] });
+  } catch (error) {
+    console.error("Server: Error database:", error);
+    // Handle invalid post ID (e.g., show an error page)
+    res.status(404).send(`Server: Blog post row with id ${postId} not found`);
+    return;
+  }
 });
 
 // Check if user is logined or not
@@ -260,7 +373,7 @@ app.post("/save", async (req, res) => {
       }
     );
     const d = new Date();
-    var blogDate = d.getFullYear() + ' ' + d.getMonth() + ' ' + d.getDate();
+    var blogDate = d.getFullYear() + " " + d.getMonth() + " " + d.getDate();
 
     try {
       await db.query(
@@ -423,12 +536,12 @@ passport.use(
               return cb(null, user);
             } else {
               // console.log("Password didnt matched for user:", user.email);
-              return cb(null, false, { message: "Incorrect password" });
+              return cb(null, false, { message: "You have entered incorrect email or password" });
             }
           });
         } else {
           // console.log("User not found:", useremail);
-          return cb(null, false, { message: "User not found" });
+          return cb(null, false, { message: "You have entered incorrect email or password" });
         }
       } catch (err) {
         console.log(err);
@@ -456,12 +569,7 @@ passport.use(
         if (result.rows.length === 0) {
           const newUser = await db.query(
             "INSERT INTO users (email, password, fname, lname) VALUES ($1, $2, $3, $4)",
-            [
-              profile.email,
-              randomPass,
-              profile.given_name,
-              profile.family_name,
-            ]
+            [profile.email, randomPass, profile.given_name, profile.family_name]
           );
           return cb(null, newUser.rows[0]);
         } else {
